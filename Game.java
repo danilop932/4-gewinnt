@@ -1,0 +1,84 @@
+public class Game {
+  
+  private int[][] feld=new int[7][6];     // X - Y 
+  public boolean ki1=false;
+  public boolean ki2=false;
+  public int amZug=1;
+  public int kiSpalte;
+  
+  KI KIa=new KI();
+  
+  public Game(){  //Spiel , KI-Initialisierung und Nullsetzung des Feldes 
+    for(int i=0;i<7;i++) {
+      for(int k=0;k<6;k++) {
+        feld[i][k]=0;
+      } // end of for
+    } // end of for 
+  }
+  
+  public boolean win(){
+    for (int i=0;i<7;i++) {
+      for (int j=0;j<6;j++) {
+        
+        int check=feld[i][j];
+        if (check!=0) {
+          if (i<4) {
+            if (feld[i+1][j]==check && feld[i+2][j]==check && feld[i+3][j]==check) {
+              return true;
+            } // end of if
+          } // end of if
+          if (j<3) {
+            if (feld[i][j+1]==check && feld[i][j+2]==check && feld[i][j+3]==check) {
+              return true;
+            } // end of i
+          } // end of if
+          
+          if (j<3 && i<4) {
+            if (feld[i+1][j+1]==check && feld[i+2][j+2]==check && feld[i+3][j+3]==check) {
+              return true;
+            } // end of if
+          } // end of if
+          if (j>2 && i<4) {
+            if (feld[i+1][j-1]==check && feld[i+2][j-2]==check && feld[i+3][j-3]==check) {
+              return true;
+            } // end of if
+          } // end of if
+        } // end of if
+        
+      } // end of for
+    } // end of for
+    return false; 
+  }
+  
+  public int setz(int spalte){
+    for (int i=0;i<6;i++) {
+      if (feld[spalte][i]==0) {
+        feld[spalte][i]=amZug;
+        return i;
+      } // end of if
+    } // end of for
+    return 6;
+  }
+  
+  public int[][] getFeld() {
+    return feld;
+  }  
+  
+  public boolean mensch(){   
+    if (amZug==1 && ki1==false) {
+      return true;
+    } // end of if
+    if (amZug==2 && ki2==false) {
+      return true;
+    } // end of if
+    return false;
+  }
+  
+  public void ki(){
+    KIa.setFeld(feld);
+    KIa.spiel(amZug);
+    kiSpalte=KIa.getSpalte();
+  }
+    
+}
+
